@@ -30,8 +30,9 @@ func main() {
 
 
 	//Create a connection the ethereum node
-	endpoint := "HTTP://127.0.0.1:7545"
-	privateKey := "ea132561922b205c5604d2e28a51ca4aaefd8c8616e708b8698a6c625d85d41b"
+	endpoint := "{end point of your local ganache or remote alchemy/infura app}"
+	privateKey := "{private key of the account where the contract is to be deployed}"
+	//ID of your testnet 
 	chainId := big.NewInt(4)
 	client, err := NewClient(endpoint, privateKey, chainId)
 	if err != nil {
