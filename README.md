@@ -1,54 +1,54 @@
 # LuxuryNFT
 
-Description
-The aim of this project is to create an application using GoLang to connect to an ethereum node to mint, burn and transfer ERC721 NFTs.
+Description<br />
+The aim of this project is to create an application using GoLang to connect to an ethereum node to mint, burn and transfer ERC721 NFTs.<br />
 
-Pre-requisities
-The basics required to get the application working on local are :
-  docker
-  postgres
-  go
-  node
-  truffle
+Pre-requisities<br />
+The basics required to get the application working on local are :<br />
+  docker<br />
+  postgres<br />
+  go<br />
+  node<br />
+  truffle<br />
+  <br />
   
-User-Roles
-The application has 2 user roles
-  Manufacturer 
-      -- Can add items to the DB
-      -- Can deploy the ERC721 contract
-      -- Can mint ERC721 NFTs
-      -- Can transfer the minted NFTs
-      -- Can burn the NFTs
-  Consumer
-      -- Can transfer an owned NFT
+User-Roles<br />
+The application has 2 user roles<br />
+  Manufacturer<br />
+      -- Can add items to the DB<br />
+      -- Can deploy the ERC721 contract<br />
+      -- Can mint ERC721 NFTs<br />
+      -- Can transfer the minted NFTs<br />
+      -- Can burn the NFTs<br />
+  Consumer<br />
+      -- Can transfer an owned NFT<br />
       
-Use-Case
-This application can be used to mint and assign NFTs to luxury physical assets in order to help prevent farudlent duplicates from being sold.
+Use-Case<br />
+This application can be used to mint and assign NFTs to luxury physical assets in order to help prevent farudlent duplicates from being sold.<br />
+<br />
 
-Set-Up
-Clone this repo using
-
-
-Navigate to the database directory and start the postgres db container
+Set-Up<br />
+Clone this repo using<br />
+Navigate to the database directory and start the postgres db container<br />
 ```
 cd database
 docker-compose up
 
 ```
 
-Navigate to the project root and run the application
+Navigate to the project root and run the application<br />
 ```
 go run .
 
 ```
-You should see a message in the terminal 
+You should see a message in the terminal<br />
 ```
 Successfully connected to database!
 Successfully connected to localhost!
 
 ```
 
-This indicates that you can now access the application using 
+This indicates that you can now access the application using<br />
 ```
 http://localhost:8080/api/v1/{}
 
