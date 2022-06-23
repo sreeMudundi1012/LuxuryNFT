@@ -138,7 +138,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//check to see the role
-	if signUpUser.Role != strings.ToLower("manufacturere") || signUpUser.Role != strings.ToLower("consumer") {
+	if strings.ToLower(signUpUser.Role) != ("manufacturer") && strings.ToLower(signUpUser.Role) != ("consumer") {
 		fmt.Println("Role is not valid")
 		json.NewEncoder(w).Encode(Response{
 			Code:    400,
@@ -442,14 +442,14 @@ func (c ClientAPIHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// var cl = Contract{"", &main}
 
 		// tx1 , err := deployedContract.MintToken(c, "", big.NewInt(9))
-		// if err != nil {
-		// 	fmt.Println(err)
-		// 	json.NewEncoder(w).Encode(Response{
-		// 		Code:    500,
-		// 		Message: "Internal server error",
-		// 	})
-		// 	return
-		// }
+		if err != nil {
+			fmt.Println(err)
+			json.NewEncoder(w).Encode(Response{
+				Code:    500,
+				Message: "Internal server error",
+			})
+			return
+		}
 
 		// fmt.Println("^^^^^^^", tx1)
 
