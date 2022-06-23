@@ -23,8 +23,8 @@ type ClientAPIHandler struct {
 
 var deployedContract Contract
 
-func randomIDGenerator() string{
-	randomID, err := nanoid.New() 
+func randomIDGenerator() string {
+	randomID, err := nanoid.New()
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -105,8 +105,6 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("^^^^^^^^^^", signUpUser)
-
 	isEmailValid := validateEmail(signUpUser.Email)
 	if !isEmailValid {
 		fmt.Println(err)
@@ -135,6 +133,16 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(Response{
 			Code:    400,
 			Message: "Email already in use",
+		})
+		return
+	}
+
+	//check to see the role
+	if signUpUser.Role != strings.ToLower("manufacturere") || signUpUser.Role != strings.ToLower("consumer") {
+		fmt.Println("Role is not valid")
+		json.NewEncoder(w).Encode(Response{
+			Code:    400,
+			Message: "Role is not valid",
 		})
 		return
 	}
@@ -402,9 +410,7 @@ func (c ClientAPIHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	case "mintNFT":
 		var mintNFTDetails MintNFTDetails
-		// var cl Client
 		var tx TransactionDetails
-		// var item Item
 
 		if claims["role"] != "manufacturer" {
 			fmt.Println("User role err")
@@ -427,11 +433,15 @@ func (c ClientAPIHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		txType := "DEPLOY"
 		row := db.DB.QueryRow("SELECT * FROM transactions where txtype= $1", txType)
-		err = row.Scan(&tx.ID, &tx.ToAddress, tx.TxType, tx.Hash, &tx.FromAddress )
+		err = row.Scan(&tx.ID, &tx.Hash, &tx.FromAddress, &tx.ToAddress, &tx.TxType)
 
 		fmt.Println("************", tx)
 
-		// tx, err := deployedContract.MintToken(cl, mint.tokenURI, big.NewInt(mint.tokenID))
+		// var cl Contract
+		// var main Main
+		// var cl = Contract{"", &main}
+
+		// tx1 , err := deployedContract.MintToken(c, "", big.NewInt(9))
 		// if err != nil {
 		// 	fmt.Println(err)
 		// 	json.NewEncoder(w).Encode(Response{
@@ -441,7 +451,7 @@ func (c ClientAPIHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// 	return
 		// }
 
-		// fmt.Println("***************", tx)
+		// fmt.Println("^^^^^^^", tx1)
 
 		json.NewEncoder(w).Encode(Response{
 			Code:    200,
@@ -477,28 +487,6 @@ func (c ClientAPIHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// 	})
 		// 	return
 		// }
-
-		// case "transferNFT":
-		// 	JWTToken := r.Header.Get("Authorization")
-		// 	TokenArray := strings.Split(JWTToken, " ")
-		// 	if TokenArray[1] == "" {
-		// 		fmt.Println("No JWT Token found")
-		// 		json.NewEncoder(w).Encode(  Response{
-		// 			Code:    500,
-		// 			Message: "No JWT Token found",
-		// 		})
-		// 		return
-		// 	}
-		// 	_, valid := validateToken(TokenArray[1])
-		// 	if !(valid) {
-		// 		fmt.Println("JWT Token error")
-		// 		json.NewEncoder(w).Encode(  Response{
-		// 			Code:    400,
-		// 			Message: "JWT Token err",
-		// 		})
-		// 		return
-		// 	}
-		//check to see if the caller of the function is the owner of the tokenuRI
 	}
 	return
 }
